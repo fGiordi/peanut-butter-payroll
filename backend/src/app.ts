@@ -10,7 +10,6 @@ import api from '@/src/api';
 
 import MessageResponse from '@/src/interfaces/MessageResponse';
 
-require('dotenv').config();
 
 const app = express();
 
