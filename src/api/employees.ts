@@ -1,26 +1,31 @@
 import express from 'express';
 import EmployeeModel from '../models/Employee';
 import { Employee } from '../interfaces/Schemas';
+import { Types } from 'mongoose';
 
 const router = express.Router();
 
-// TODO to add types here to Employees
 type EmployeeResponse = Employee[];
+
+interface CreatedEmployeeResponse extends Employee {
+  _id: Types.ObjectId;
+} 
 
 router.get<{}, EmployeeResponse | { error: string }>('/', async (req, res) => {
   try {
     const employees = await EmployeeModel.find();
 
     res.json(employees);
-  } catch (error) {
-    res.status(500).json({ error: 'Internal server error' });
+  } catch (error: unknown) {
+    // @ts-ignore
+    res.status(500).json({ error: error.message });
   }
 });
 
-router.post<{}, EmployeeResponse | any>('/', async (req, res) => {
-  console.log('posting employees');
+router.post<{}, CreatedEmployeeResponse | {}>('/', async (req, res) => {
   try {
     const { firstName, lastName, employeeNumber, profileColor, grossSalary, salutation, gender } = req.body;
+
     const newEmployee = new EmployeeModel({
       firstName,
       lastName,
@@ -38,7 +43,9 @@ router.post<{}, EmployeeResponse | any>('/', async (req, res) => {
 
     res.status(201).json(savedEmployee); 
   } catch (error: any) {
-    throw new Error(error.message);
+    console.log('error', error.message);
+    res.status(500).json({ error: error.message });
+
   }
 });
 
