@@ -1,6 +1,6 @@
 import express from 'express';
 
-import MessageResponse from '@/src/interfaces/MessageResponse';
+import MessageResponse from '@/src/interfaces/Responses/MessageResponse';
 import emojis from './emojis';
 import employees from './employees';
 

@@ -11,11 +11,11 @@ interface CreatedEmployeeResponse extends Employee {
   _id: Types.ObjectId;
 } 
 
-router.get<{}, EmployeeResponse | { error: string }>('/', async (req, res) => {
+router.get<{}, EmployeeResponse | { }>('/', async (req, res) => {
   try {
     const employees = await EmployeeModel.find();
 
-    res.json(employees);
+    res.status(200).json({ employees: employees, message: 'All Employees - 👋🌎🌍🌏' });
   } catch (error: unknown) {
     // @ts-ignore
     res.status(500).json({ error: error.message });
@@ -43,7 +43,6 @@ router.post<{}, CreatedEmployeeResponse | {}>('/', async (req, res) => {
 
     res.status(201).json(savedEmployee); 
   } catch (error: any) {
-    console.log('error', error.message);
     res.status(500).json({ error: error.message });
 
   }

@@ -5,10 +5,10 @@ import morgan from 'morgan';
 import helmet from 'helmet';
 import cors from 'cors';
 
-import * as middlewares from '@/src/middlewares';
-import api from '@/src/api';
+import * as middlewares from './middlewares';
+import api from '../src/api';
 
-import MessageResponse from '@/src/interfaces/MessageResponse';
+import MessageResponse from '../src/interfaces/Responses/MessageResponse';
 
 
 const app = express();
