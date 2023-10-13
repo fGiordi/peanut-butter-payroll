@@ -1,5 +1,5 @@
 import app from '@/src/app';
-import '@src/db'
+import '@src/db';
 
 require('dotenv').config();
 
