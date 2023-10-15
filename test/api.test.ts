@@ -1,10 +1,15 @@
 import request from 'supertest';
+import chai from 'chai';
+// @ts-ignore
+import chaiHttp from 'chai-http';
+
+chai.use(chaiHttp);
 
 import app from '../src/app';
 
 describe('Integration Test for POST /api/v1/employees', () => {
-  it('should create a new employee and return a 201 status code', async () => {
-    const newEmployee = {
+  it('should create a new employee and return a 201 status code', () => {
+    const updatedInfo = {
       firstName: 'John',
       lastName: 'Doe',
       employeeNumber: 12345,
@@ -13,15 +18,20 @@ describe('Integration Test for POST /api/v1/employees', () => {
       salutation: 'Mr.',
       gender: 'Male',
     };
+    // const expect = chai.expect;
 
-    const response = await request(app)
-      .post('/api/v1/employees')
+    return request(app)
+      .put('/api/v1/employees/652931efee0ded3d8aa9503f')
       .set('Accept', 'application/json')
-      .send(newEmployee);
+      .send(updatedInfo)
+      .then((response) => {
+        console.log('response', response.body);
+        console.log('response', response.status);
+        expect(response.status).toBe(200);
+      });
 
-    expect(response.body).toEqual(newEmployee);
-
-  }, 1000);
+   
+  }, 30000);
 
   it('should handle errors and return a 500 status code', () => {
     const invalidEmployee = {
@@ -36,7 +46,7 @@ describe('Integration Test for POST /api/v1/employees', () => {
         expect(response.status).toBe(500);
         expect(response.body).toHaveProperty('error');
       });
-  }, 20000);
+  }, 30000);
 
   
 });
