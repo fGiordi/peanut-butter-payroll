@@ -30,7 +30,7 @@ router.get<{}, CreatedEmployeeResponse | {}>('/:employeeId', async (req, res) =>
     // Validate that `employeeId`
 
     // Find the employee by ID
-    const employee =  EmployeeModel.findById(employeeId);
+    const employee =  await EmployeeModel.findById(employeeId);
 
     if (!employee) {
       return res.status(404).json({ error: 'Employee not found' });
@@ -59,7 +59,6 @@ router.post<{}, CreatedEmployeeResponse | {}>('/', async (req, res) => {
     // Save the new product to the database
     const savedEmployee = await newEmployee.save();
 
-    console.log('savedEmployee', savedEmployee);
 
     res.status(201).json(savedEmployee); 
   } catch (error: any) {
@@ -115,7 +114,6 @@ router.delete<{}, {}>('/:employeeId', async (req, res) => {
       return res.status(404).json({ error: 'Employee not found' });
     }
 
-    // Delete the employee from the database
     // @ts-ignore TODO to fix this
     await employee.remove();
 

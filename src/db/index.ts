@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 require('dotenv').config();
 
-const MONGO_URI = `mongodb+srv://${process.env.MONGO_USER_NAME}:${process.env.MONGO_PASSWORD}@cluster0.9knoiqg.mongodb.net/?retryWrites=true&w=majority`;
+export const MONGO_URI = `mongodb+srv://${process.env.MONGO_USER_NAME}:${process.env.MONGO_PASSWORD}@cluster0.9knoiqg.mongodb.net/?retryWrites=true&w=majority`;
 
 mongoose.connect(MONGO_URI, {
 })
@@ -14,5 +14,7 @@ mongoose.connect(MONGO_URI, {
   });
 
 
+
 export const db = mongoose.connection;
+export const disconnect = mongoose.disconnect;
 
