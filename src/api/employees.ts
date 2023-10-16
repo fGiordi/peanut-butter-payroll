@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { Request, Response } from 'express';
 import EmployeeModel from '../models/Employee';
 import { Employee } from '../interfaces/Schemas';
 import { Types } from 'mongoose';
@@ -11,7 +11,7 @@ interface CreatedEmployeeResponse extends Employee {
   _id: Types.ObjectId;
 } 
 
-router.get<{}, EmployeeResponse | { }>('/', async (req, res) => {
+router.get<{}, EmployeeResponse | { }>('/', async (req: Request, res: Response) => {
   try {
     const employees = await EmployeeModel.find();
 
@@ -22,7 +22,7 @@ router.get<{}, EmployeeResponse | { }>('/', async (req, res) => {
   }
 });
 
-router.get<{}, CreatedEmployeeResponse | {}>('/:employeeId', async (req, res) => {
+router.get<{}, CreatedEmployeeResponse | {}>('/:employeeId', async (req: Request, res: Response) => {
   try {
     // @ts-ignore
     const employeeId = req.params.employeeId;
@@ -42,7 +42,7 @@ router.get<{}, CreatedEmployeeResponse | {}>('/:employeeId', async (req, res) =>
   }
 });
 
-router.post<{}, CreatedEmployeeResponse | {}>('/', async (req, res) => {
+router.post<{}, CreatedEmployeeResponse | {}>('/', async (req:Request, res:Response) => {
   try {
     const { firstName, lastName, employeeNumber, profileColor, grossSalary, salutation, gender } = req.body;
 
@@ -67,7 +67,7 @@ router.post<{}, CreatedEmployeeResponse | {}>('/', async (req, res) => {
   }
 });
 
-router.put<{}, CreatedEmployeeResponse | {}>('/:employeeId', async (req, res) => {
+router.put<{}, CreatedEmployeeResponse | {}>('/:employeeId', async (req:Request, res:Response) => {
   try {
     // @ts-ignore
     const employeeId = req.params.employeeId;
@@ -100,7 +100,7 @@ router.put<{}, CreatedEmployeeResponse | {}>('/:employeeId', async (req, res) =>
   }
 });
 
-router.delete<{}, {}>('/:employeeId', async (req, res) => {
+router.delete<{}, {}>('/:employeeId', async (req:Request, res:Response) => {
   try {
     // @ts-ignore
     const employeeId = req.params.employeeId as string;
