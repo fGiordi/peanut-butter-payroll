@@ -1,93 +1,49 @@
 import request from 'supertest';
-import chai from 'chai';
-
-// @ts-ignore
-import chaiHttp from 'chai-http';
-
-chai.use(chaiHttp);
-
 import app from '../src/app';
+import { connectDB, disconnectDB, cleanData } from '../src/db';
 
-import mongoose from 'mongoose';
 require('dotenv').config();
 
-// @ts-ignore
-import { MongoMemoryServer } from 'mongodb-memory-server';
-import {  disconnect } from '../src/db';
+describe('API Intergration Test', () => {
 
-
-
-it('should create a new employee and return a 201 status code', async () => {
-  const updatedInfo = {
-    firstName: 'John',
-    lastName: 'Doe',
-    employeeNumber: 12345,
-    profileColor: 'Blue',
-    grossSalary: 60000,
-    salutation: 'Mr.',
-    gender: 'Male',
-  };
-
-  // const response = await request(app)
-  //   .put('/api/v1/employees/employeeId')
-  //   .set('Accept', 'application/json')
-  //   .send(updatedInfo);
-
-  // expect(response.status).toBe(200);
-});
-
-describe('API test', () => {
   beforeAll(() => {
-    
+    connectDB();
   });
 
-  afterAll(() => {
-    disconnect();
+  beforeEach(cleanData);
+
+  afterAll(disconnectDB);
+
+  it('should get all employees', async () => {
+    const response = await request(app)
+      .get('/api/v1/employees');
+
+    expect(response.status).toBe(200);
+    console.log('response', response.body);
+
   });
 
-  describe('Intergration Test', () => {
-    it('GET Employees', async () => {
-      const response = await request(app)
-        .get('/api/v1/employees');
+  it('should create employee', async () => {
+    const newInfo = {
+      firstName: 'Johnoaia',
+      lastName: 'Doe',
+      employeeNumber: 12345,
+      profileColor: 'Blue',
+      grossSalary: 60000,
+      salutation: 'Mr.',
+      gender: 'Male',
+    };
 
   
-      expect(response.status).toBe(200);
+    const response = await request(app)
+      .post('/api/v1/employees')
+      .set('Accept', 'application/json')
+      .send(newInfo);
 
-    });
-
-    it('PUT Employee', async () => {
-      const updatedInfo = {
-        firstName: 'John',
-        lastName: 'Doe',
-        employeeNumber: 12345,
-        profileColor: 'Blue',
-        grossSalary: 60000,
-        salutation: 'Mr.',
-        gender: 'Male',
-      };
-
-      // const response = await request(app)
-      //   .get('/api/v1/employees');
-
-      // console.log('response', response.status);
-      // console.log('response', response.body);
   
+    expect(response.status).toBe(201);
 
-      
-    
-      const response = await request(app)
-        .put('/api/v1/employees/652931efee0ded3d8aa9503f')
-        .set('Accept', 'application/json')
-        .send(updatedInfo);
-    
-      expect(response.status).toBe(200);
-
-    });
   });
-});
-
-
-describe('Integration Test for POST /api/v1/employees', () => {
 
   it('should handle errors and return a 500 status code', () => {
     const invalidEmployee = {
@@ -102,8 +58,7 @@ describe('Integration Test for POST /api/v1/employees', () => {
         expect(response.status).toBe(500);
         expect(response.body).toHaveProperty('error');
       });
-  }, 30000);
-
-  
+  });
 });
+
 
