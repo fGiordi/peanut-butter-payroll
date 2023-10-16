@@ -86,12 +86,11 @@ export const deleteEmployeeById = async (req: Request, res: Response) => {
   try {
     const employeeId = req.params.id as string;
     // Find the employee by ID
-    const employee = await EmployeeModel.findById(employeeId);
+    const employee = await EmployeeModel.findByIdAndRemove(employeeId);
     if (!employee) {
       return res.status(404).json({ error: 'Employee not found' });
     }
     // @ts-ignore
-    await employee.remove();
 
     res.status(204).send(); // No content
   } catch (error) {
