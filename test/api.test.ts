@@ -19,7 +19,6 @@ describe('API Intergration Test', () => {
       .get('/api/v1/employees');
 
     expect(response.status).toBe(200);
-    console.log('response', response.body);
 
   });
 
