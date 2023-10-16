@@ -1,15 +1,9 @@
 import express, { Request, Response } from 'express';
 import EmployeeModel from '../models/Employee';
-import { Employee } from '../interfaces/Schemas';
-import { Types } from 'mongoose';
+import { validateMongoId } from '../middlewares';
+import { EmployeeResponse, CreatedEmployeeResponse } from '../interfaces/Responses/EmployeeResponse';
 
 const router = express.Router();
-
-type EmployeeResponse = Employee[];
-
-interface CreatedEmployeeResponse extends Employee {
-  _id: Types.ObjectId;
-} 
 
 router.get<{}, EmployeeResponse | { }>('/', async (req: Request, res: Response) => {
   try {
@@ -22,13 +16,10 @@ router.get<{}, EmployeeResponse | { }>('/', async (req: Request, res: Response) 
   }
 });
 
-router.get<{}, CreatedEmployeeResponse | {}>('/:employeeId', async (req: Request, res: Response) => {
+router.get<{}, CreatedEmployeeResponse | {}>('/:id', validateMongoId,  async (req: Request, res: Response) => {
   try {
-    // @ts-ignore
-    const employeeId = req.params.employeeId;
+    const employeeId = req.params.id as string;
   
-    // Validate that `employeeId`
-
     // Find the employee by ID
     const employee =  await EmployeeModel.findById(employeeId);
 
@@ -67,13 +58,9 @@ router.post<{}, CreatedEmployeeResponse | {}>('/', async (req:Request, res:Respo
   }
 });
 
-router.put<{}, CreatedEmployeeResponse | {}>('/:employeeId', async (req:Request, res:Response) => {
+router.put<{}, CreatedEmployeeResponse | {}>('/:id', validateMongoId, async (req:Request, res:Response) => {
   try {
-    // @ts-ignore
-    const employeeId = req.params.employeeId;
-
-    // Validate that `employeeId` is valid
-
+    const employeeId = req.params.id as string;
     const { firstName, lastName, profileColor, grossSalary, salutation, gender } = req.body;
 
     // Find the existing employee by ID
@@ -100,12 +87,9 @@ router.put<{}, CreatedEmployeeResponse | {}>('/:employeeId', async (req:Request,
   }
 });
 
-router.delete<{}, {}>('/:employeeId', async (req:Request, res:Response) => {
+router.delete<{}, {}>('/:id', validateMongoId, async (req:Request, res:Response) => {
   try {
-    // @ts-ignore
-    const employeeId = req.params.employeeId as string;
-
-    // Validate that `employeeId` is a valid
+    const employeeId = req.params.id as string;
 
     // Find the employee by ID
     const employee = await EmployeeModel.findById(employeeId);
@@ -117,7 +101,7 @@ router.delete<{}, {}>('/:employeeId', async (req:Request, res:Response) => {
     // @ts-ignore TODO to fix this
     await employee.remove();
 
-    res.status(204).send(); // Respond with a status code of 204
+    res.status(204).send(); 
     // TODO add message
   } catch (error: any) {
     res.status(500).json({ error: error.message });

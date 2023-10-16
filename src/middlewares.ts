@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-
+import mongoose from 'mongoose';
 import ErrorResponse from '@/src/interfaces/Responses/ErrorResponse';
 
 export function notFound(req: Request, res: Response, next: NextFunction) {
@@ -15,4 +15,22 @@ export function errorHandler(err: Error, req: Request, res: Response<ErrorRespon
     message: err.message,
     stack: process.env.NODE_ENV === 'production' ? '🥞' : err.stack,
   });
+}
+
+
+export function validateMongoId(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
+  const id = req.params.id as string;
+  console.log('id', id);
+  console.log('type id', typeof id);
+  if (id && mongoose.Types.ObjectId.isValid(id)) {
+    next(); 
+  } else {
+    const error = new Error('Invalid MongoDB ObjectId');
+    res.status(400);
+    next(error);
+  }
 }
