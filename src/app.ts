@@ -5,8 +5,8 @@ import morgan from 'morgan';
 import helmet from 'helmet';
 import cors from 'cors';
 
-import * as middlewares from './middlewares';
-import api from '../src/api';
+import * as middlewares from './middleware';
+import api from './routes';
 
 import MessageResponse from '../src/interfaces/Responses/MessageResponse';
 

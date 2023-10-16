@@ -1,39 +1,34 @@
-import express, { Request, Response } from 'express';
-import EmployeeModel from '../models/Employee';
-import { validateMongoId } from '../middlewares';
-import { EmployeeResponse, CreatedEmployeeResponse } from '../interfaces/Responses/EmployeeResponse';
+import { Request, Response } from 'express';
+import  EmployeeModel  from '../models/Employee'; 
 
-const router = express.Router();
-
-router.get<{}, EmployeeResponse | { }>('/', async (req: Request, res: Response) => {
+export const getEmployees = async (req: Request, res: Response) => {
   try {
     const employees = await EmployeeModel.find();
-
-    res.status(200).json({ employees: employees, message: 'All Employees - 👋🌎🌍🌏' });
-  } catch (error: unknown) {
+    res.status(200).json({ employees, message: 'All Employees - 👋🌎🌍🌏' });
+  } catch (error) {
     // @ts-ignore
     res.status(500).json({ error: error.message });
   }
-});
+};
 
-router.get<{}, CreatedEmployeeResponse | {}>('/:id', validateMongoId,  async (req: Request, res: Response) => {
+export const getEmployeeById = async (req: Request, res: Response) => {
   try {
     const employeeId = req.params.id as string;
-  
-    // Find the employee by ID
-    const employee =  await EmployeeModel.findById(employeeId);
+
+    const employee = await EmployeeModel.findById(employeeId);
 
     if (!employee) {
       return res.status(404).json({ error: 'Employee not found' });
     }
 
     res.status(200).json(employee);
-  } catch (error: any) {
+  } catch (error) {
+    // @ts-ignore
     res.status(500).json({ error: error.message });
   }
-});
+};
 
-router.post<{}, CreatedEmployeeResponse | {}>('/', async (req:Request, res:Response) => {
+export const createEmployee = async (req: Request, res: Response) => {
   try {
     const { firstName, lastName, employeeNumber, profileColor, grossSalary, salutation, gender } = req.body;
 
@@ -47,18 +42,17 @@ router.post<{}, CreatedEmployeeResponse | {}>('/', async (req:Request, res:Respo
       gender,
     });
 
-    // Save the new product to the database
+    // Save the new employee to the database
     const savedEmployee = await newEmployee.save();
 
-
-    res.status(201).json(savedEmployee); 
-  } catch (error: any) {
+    res.status(201).json(savedEmployee);
+  } catch (error) {
+    // @ts-ignore
     res.status(500).json({ error: error.message });
-
   }
-});
+};
 
-router.put<{}, CreatedEmployeeResponse | {}>('/:id', validateMongoId, async (req:Request, res:Response) => {
+export const updateEmployeeById = async (req: Request, res: Response) => {
   try {
     const employeeId = req.params.id as string;
     const { firstName, lastName, profileColor, grossSalary, salutation, gender } = req.body;
@@ -82,32 +76,26 @@ router.put<{}, CreatedEmployeeResponse | {}>('/:id', validateMongoId, async (req
     const updatedEmployee = await existingEmployee.save();
 
     res.status(200).json(updatedEmployee);
-  } catch (error: any) {
+  } catch (error) {
+    // @ts-ignore
     res.status(500).json({ error: error.message });
   }
-});
+};
 
-router.delete<{}, {}>('/:id', validateMongoId, async (req:Request, res:Response) => {
+export const deleteEmployeeById = async (req: Request, res: Response) => {
   try {
     const employeeId = req.params.id as string;
-
     // Find the employee by ID
     const employee = await EmployeeModel.findById(employeeId);
-
     if (!employee) {
       return res.status(404).json({ error: 'Employee not found' });
     }
-
-    // @ts-ignore TODO to fix this
+    // @ts-ignore
     await employee.remove();
 
-    res.status(204).send(); 
-    // TODO add message
-  } catch (error: any) {
+    res.status(204).send(); // No content
+  } catch (error) {
+    // @ts-ignore
     res.status(500).json({ error: error.message });
   }
-});
-
-
-
-export default router;
+};
