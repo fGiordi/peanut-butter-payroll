@@ -24,8 +24,6 @@ export function validateMongoId(
   next: NextFunction,
 ) {
   const id = req.params.id as string;
-  console.log('id', id);
-  console.log('type id', typeof id);
   if (id && mongoose.Types.ObjectId.isValid(id)) {
     next(); 
   } else {
