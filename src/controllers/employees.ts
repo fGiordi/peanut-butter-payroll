@@ -91,7 +91,6 @@ export const deleteEmployeeById = async (req: Request, res: Response) => {
       return res.status(404).json({ error: 'Employee not found' });
     }
     // @ts-ignore
-
     res.status(204).send(); // No content
   } catch (error) {
     // @ts-ignore
