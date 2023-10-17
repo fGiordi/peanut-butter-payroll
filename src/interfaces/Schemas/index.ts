@@ -1,4 +1,6 @@
 
+import {  Document  } from 'mongoose';
+
 export type TSalutation = 'Mr.' | 'Dr.' | 'Ms.' | 'Mrs' | 'Mx';
 export type TGender = 'Male' | 'Female' | 'Unspecified';
 export type TColor = 'Green' | 'Blue' | ' Red' | 'Default';
