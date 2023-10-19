@@ -59,7 +59,7 @@ export const createEmployee = async (req: Request, res: Response) => {
 export const updateEmployeeById = async (req: Request, res: Response) => {
   try {
     const employeeId = req.params.id as string;
-    const { firstName, lastName, profileColor, grossSalary, salutation, gender } = req.body;
+    const { firstName, lastName, profileColor, grossSalary, salutation, gender, employeeNumber } = req.body;
 
     // Find the existing employee by ID
     const existingEmployee = await EmployeeModel.findById(employeeId);
@@ -75,6 +75,7 @@ export const updateEmployeeById = async (req: Request, res: Response) => {
     existingEmployee.grossSalary = grossSalary;
     existingEmployee.salutation = salutation;
     existingEmployee.gender = gender;
+    existingEmployee.employeeNumber = employeeNumber;
 
     // Save the updated employee to the database
     const updatedEmployee = await existingEmployee.save();
