@@ -1,62 +1,48 @@
-# peanut-butter-payroll
-Full stack application backend
+# Technical Assignment
 
-# Express API Starter with Typescript
+Build a RESTAPI and a Front end that can CRUD Employees.
+We want to be ablet to view the data using React JS and Node Backend.
 
-How to use this template:
+## Criteria:
 
-```sh
-npx create-express-api --typescript --directory my-api-name
-```
+- [ ] Should be able to view all employees
+- [ ] Should be able to select a record from the employees
+- [ ] Should be able to add/update employee information
+- [ ] Should be able to auto populate Gender and Full Name.
+- [ ] Should be able to DELETE employee
 
-Includes API Server utilities:
+## How to run the application:
+- [ ] clone this repo
+- [ ] run yarn to install the dependencies
+- [ ] run yarn dev to run the server
+- [ ] ** Ensure that you have the ENV variables in the backend, I have a sample file for you to see the example **
+- [ ] Once the server is running, you can test the endpoints by pinging these routes
+  - /api/v1/ -> GET
+  - /api/v1/employees -> GET
+  - / -> GET
+- Once you have tested these endpoints using either your browswer or an HTTP client tool, you can spin up the client server found here [https://github.com/fGiordi/peanut-frontend]
 
-* [morgan](https://www.npmjs.com/package/morgan)
-  * HTTP request logger middleware for node.js
-* [helmet](https://www.npmjs.com/package/helmet)
-  * Helmet helps you secure your Express apps by setting various HTTP headers. It's not a silver bullet, but it can help!
-* [dotenv](https://www.npmjs.com/package/dotenv)
-  * Dotenv is a zero-dependency module that loads environment variables from a `.env` file into `process.env`
-* [cors](https://www.npmjs.com/package/cors)
-  * CORS is a node.js package for providing a Connect/Express middleware that can be used to enable CORS with various options.
 
-Development utilities:
+## How to test the application:
 
-* [typescript](https://www.npmjs.com/package/typescript)
-  * TypeScript is a language for application-scale JavaScript.
-* [ts-node](https://www.npmjs.com/package/ts-node)
-  * TypeScript execution and REPL for node.js, with source map and native ESM support.
-* [nodemon](https://www.npmjs.com/package/nodemon)
-  * nodemon is a tool that helps develop node.js based applications by automatically restarting the node application when file changes in the directory are detected.
-* [eslint](https://www.npmjs.com/package/eslint)
-  * ESLint is a tool for identifying and reporting on patterns found in ECMAScript/JavaScript code.
-* [typescript-eslint](https://typescript-eslint.io/)
-  * Tooling which enables ESLint to support TypeScript.
-* [jest](https://www.npmjs.com/package/jest)
-  * Jest is a delightful JavaScript Testing Framework with a focus on simplicity.
-* [supertest](https://www.npmjs.com/package/supertest)
-  * HTTP assertions made easy via superagent.
+- run yarn test to test the intergration tests.
+- I am testing the following intergration test cases in my application
+  - should get all employees/or can get all employees
+  - should create /or can create an employee
+  - should return an error when invalid or incomplete details is sent to the application.
+- I am also testing
+  - general route that does not exist
+  - base / endpoint to make sure its all fine and returns a success.
+- Intergration test is using in memory db for test cases to ensure integrity and consistency with my data and not interfere with real users information
+  
 
-## Setup
+## Technologies Used:
 
-```
-npm install
-```
+- Javascript
+- Typescript
+- Node JS
+- Mongo DB
 
-## Lint
+# By:
 
-```
-npm run lint
-```
-
-## Test
-
-```
-npm run test
-```
-
-## Development
-
-```
-npm run dev
-```
+Giordi Fungula

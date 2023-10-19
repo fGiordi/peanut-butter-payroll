@@ -42,6 +42,8 @@ export const createEmployee = async (req: Request, res: Response) => {
       gender,
     });
 
+    console.log('creating new user', req.body);
+
     // Save the new employee to the database
     const savedEmployee = await newEmployee.save();
 
@@ -49,6 +51,8 @@ export const createEmployee = async (req: Request, res: Response) => {
   } catch (error) {
     // @ts-ignore
     res.status(500).json({ error: error.message });
+    // @ts-ignore
+    console.log('error on create', error.message);
   }
 };
 

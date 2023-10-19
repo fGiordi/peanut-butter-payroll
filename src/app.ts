@@ -10,7 +10,6 @@ import api from './routes';
 
 import MessageResponse from '../src/interfaces/Responses/MessageResponse';
 
-
 const app = express();
 
 app.use(morgan('dev'));
