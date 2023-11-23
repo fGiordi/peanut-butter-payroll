@@ -20,5 +20,7 @@
     "./*.js",
     "src/**/*.ts",
     "test/**/*.ts",
+    "./lambda",
+    "./backend-cdk"
   ],
 }

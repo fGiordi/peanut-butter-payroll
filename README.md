@@ -3,6 +3,9 @@
 Build a RESTAPI and a Front end that can CRUD Employees.
 We want to be ablet to view the data using React JS and Node Backend.
 
+## Deployed Link
+[https://fc1g67o1ej.execute-api.eu-north-1.amazonaws.com/prod](https://fc1g67o1ej.execute-api.eu-north-1.amazonaws.com/prod)
+
 ## Criteria:
 
 - [ ] Should be able to view all employees
