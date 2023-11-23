@@ -20,6 +20,7 @@
   "license": "MIT",
   "dependencies": {
     "@types/helmet": "^4.0.0",
+    "@vendia/serverless-express": "^4.10.4",
     "aws-serverless-express": "^3.4.0",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",

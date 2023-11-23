@@ -9,11 +9,6 @@ import * as middlewares from './middleware';
 import api from './routes';
 
 import MessageResponse from '../src/interfaces/Responses/MessageResponse';
-// eslint-disable-next-line import/no-extraneous-dependencies
-import serverlessExpress  from '@vendia/serverless-express';
-import { connectDB } from './db';
-
-let serverlessExpressInstance: any;
 
 const app = express();
 
@@ -39,19 +34,5 @@ app.use('/api/v1', api);
 app.use(middlewares.notFound);
 app.use(middlewares.errorHandler);
 
-// @ts-ignore
-async function setup(event, context) {
-  const asyncValue = await connectDB();
-  console.log(asyncValue);
-  serverlessExpressInstance = serverlessExpress({ app });
-  return serverlessExpressInstance(event, context);
-}
-
-// @ts-ignore
-export function handler(event, context) {
-  if (serverlessExpressInstance) return serverlessExpressInstance(event, context);
-
-  return setup(event, context);
-}
 
 export default app;

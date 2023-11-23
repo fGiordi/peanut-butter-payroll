@@ -1,8 +1,3 @@
-exports.handler = async (event) => {
-  console.log('request:', JSON.stringify(event, undefined, 2));
+import { handler } from './src/index';
 
-  return {
-    statusCode: 200,
-    body: JSON.stringify({ message: 'Hello world' }),
-  };
-};
+exports.handler = handler;
